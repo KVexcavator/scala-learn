@@ -1,0 +1,39 @@
+https://github.com/deanwampler/programming-scala-book-code-examples
+https://www.scala-lang.org/
+===============================================
+$ sbt
+> help # Describe commands.
+> tasks # Show the most commonly used, available tasks.
+> tasks -V # Show ALL the available tasks.
+> compile # Incrementally compile the code.
+> test # Incrementally compile the code and run the tests.
+> clean # Delete all build artifacts.
+> console # Start the interactive Scala environment.
+> run # Run one of the "main" methods (applications) in the project.
+> show x # Show the value of setting or task "x".
+> exit # Quit the sbt shell (also control-d works).
+======================================
+полазить
+$ sbt console
+...
+scala> :help
+scala> 1+2
+scala> :quit
+=======================================
+как скомпилировать и увидеть из корня проекта содержимое файла
+$ sbt
+...
+> console
+...
+scala> :load src/script/scala/progscala3/introscala/Upper1.scala
+List(HELLO, WORLD!)
+======================================
+Для запуска всех  sbt test. Для запуска только одного конкретного теста testOnly path, где path — это полное имя типа для теста
+======================================
+запуск main из подпапок
+$ sbt
+>runMain hello
+>runMain progscala3.introscala.Hello2 hello world again!
+======================================
+Удобный прием sbt — добавление тильды ~ в начало любой команды. Всякий раз, когда изменения файла сохраняются на диске, команда будет запущена повторно. Например, ~test, чтобы продолжать компилировать свой код и запускать тесты. 
+============================================================
