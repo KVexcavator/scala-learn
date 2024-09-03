@@ -1,0 +1,32 @@
+Организация кода в файлах и пространствах имен
+
+В Scala есть концепция пакетов для пространств имен. Хотя она вдохновлена ​​пакетами в Java, имена файлов не обязательно должны соответствовать именам типов, а структура пакета не обязательно должна соответствовать структуре каталогов. Таким образом, вы можете определять пакеты в файлах независимо от их «физического» расположения.
+
+// src/main/scala/progscala3/typelessdomore/Package1.scala
+package com.example.mypkg
+
+class MyClass:
+  def mymethod(s: String): String = s
+
+Scala также поддерживает блочно-структурированный синтаксис для объявления области действия пакета:
+
+package com: 
+  package example: // Subpackage of "com"
+    package pkg1: // Subpackage of "example"
+
+    class Class11: // Class inside "com.example.pkg1"
+      def m = "m11"
+
+    class Class12: // Class inside "com.example.pkg1"
+      def m = "m12"
+
+    package pkg2: // Subpackage of "example"
+      class Class21: // Class inside "com.example.pkg2"
+        def m = "m21"
+        def makeClass11 = pkg1.Class11()
+        def makeClass12 = pkg1.Class12()
+
+    package pkg3.pkg31.pkg311: // Более лаконичное вложение пакетов
+      class Class311:
+        def m = "m21"
+      

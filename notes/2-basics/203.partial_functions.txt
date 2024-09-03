@@ -1,0 +1,61 @@
+Partial Functions
+PartialFunction[A,B] — это особый вид функции со своим собственным литеральным синтаксисом. A — это тип единственного параметра, который принимает функция, а B — это тип возвращаемого значения. Литеральный синтаксис для PartialFunction состоит только из case-предложений.
+```
+import progscala3.introscala.shapes.*
+
+val func: Message => String = message => message match
+  case Exit => "Got Exit"
+  case Draw(shape) => s"Got Draw($shape)"
+  case Response(str) => s"Got Response($str)"
+
+val pfunc: PartialFunction[Message, String] =
+  case Exit => "Got Exit"
+  case Draw(shape) => s"Got Draw($shape)"
+  case Response(str) => s"Got Response($str)"
+
+func(Draw(Circle(Point(0.0,0.0), 1.0)))
+pfunc(Draw(Circle(Point(0.0,0.0), 1.0)))
+func(Response(s"Say hello to pi: 3.14159"))
+pfunc(Response(s"Say hello to pi: 3.14159"))
+```
+Частичная функция будет обрабатывать только некоторые из возможных входных данных, а не все возможные входные данные. Так что не отправляйте ей то, с чем она не знает, как справиться. Классический пример из математики — деление x/y, которое не определено, когда знаменатель y равен 0.
+Если частичная функция вызывается с входными данными, которые не соответствуют ни одному из условий case, во время выполнения выдается исключение MatchError.
+-------------------------------------------------
+Как тестить:
+Можно объединить PartialFunctions вместе: f1.orElse(pf2).orElse(pf3)…. Если pf1 не совпадает, то пробуется pf2, затем pf3 и т. д. MatchError выдается только в том случае, если ни один из них не совпадает.
+Используя метод isDefinedAt можно проверить, будет ли PartialFunction соответствовать входным данным.
+Вспомогательная функция tryPF используется для проверки частичной функции и перехвата возможных исключений MatchError
+
+val pfs: PartialFunction[Matchable,String] =
+case s:String => "YES" // совпадают строки
+val pfd: PartialFunction[Matchable,String] =
+case d:Double => "YES" // совпадают дроби
+val pfsd = pfs.orElse(pfd)
+
+def tryPF(
+x: Matchable, f: PartialFunction[Matchable,String]): String =
+try f(x)
+catch case _: MatchError => "ERROR!"
+assert(tryPF("str", pfs) == "YES")
+assert(tryPF("str", pfd) == "ERROR!")
+assert(tryPF("str", pfsd) == "YES")
+assert(tryPF(3.142, pfs) == "ERROR!")
+assert(tryPF(3.142, pfd) == "YES")
+assert(tryPF(3.142, pfsd) == "YES")
+assert(tryPF(2, pfs) == "ERROR!")
+assert(tryPF(2, pfd) == "ERROR!")
+assert(tryPF(2, pfsd) == "ERROR!")
+assert(pfs.isDefinedAt("str") == true)
+assert(pfd.isDefinedAt("str") == false)
+assert(pfsd.isDefinedAt("str") == true)
+assert(pfs.isDefinedAt(3.142) == false)
+assert(pfd.isDefinedAt(3.142) == true)
+assert(pfsd.isDefinedAt(3.142) == true)
+assert(pfs.isDefinedAt(2) == false)
+assert(pfd.isDefinedAt(2) == false)
+assert(pfsd.isDefinedAt(2) == false)
+------------------------------------------
+Можно поднять-lift частичную функцию в обычную (общую) функцию, которая возвращает Option или Some(value), когда частичная функция определена для входного аргумента, или None, когда это не так. Это типобезопасная альтернатива возврату значения или null соответственно. Мы также можем 'unlift' функцию с одним параметром;
+
+val fs = pfs.lift
+val pfs2 = fs.unlift

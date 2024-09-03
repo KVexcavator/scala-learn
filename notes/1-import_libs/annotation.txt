@@ -1,0 +1,11 @@
+import scala.annotation.tailrec
+
+def factorial(i: Int): BigInt =
+  @tailrec
+  def fact(i: Int, accumulator: BigInt): BigInt =
+  if i <= 1 then accumulator
+  else fact(i - 1, i * accumulator)
+  fact(i, BigInt(1))
+(0 to 5).foreach(i => println(s"$i: ${factorial(i)}"))
+
+вы можете захотеть узнать, правильно ли вы все сделали и действительно ли компилятор выполнил оптимизацию. Никто не хочет, чтобы стек был взорван в продакшене. К счастью, компилятор может сообщить вам, если вы ошиблись, если вы добавите аннотацию tailrec

@@ -1,0 +1,23 @@
+Вывод информации о типе
+Информация о типе должна быть предоставлена ​​явно.
+Например:
+scala> val map1: Map[Int, String] = Map.empty
+или более идиоматично
+scala> val map2 = Map.empty[Int, String]
+или с конкретизацией подтипа
+scala> import scala.collection.immutable.TreeMap
+scala> val map3: Map[Int, String] = TreeMap.empty
+
+Пример с перегруженными методами
+case class Money(value: BigDecimal)
+case object Money:
+  def apply(s: String): Money = apply(BigDecimal(s.toDouble))
+  def apply(d: Double): Money = apply(BigDecimal(d))
+
+==========================================
+Повторяющиеся списки параметров
+Scala поддерживает методы, которые принимают повторяющиеся параметры. Другие языки называют их списками переменных аргументов (varargs для краткости) или ссылаются на методы, которые их используют, как на вариативные методы.
+
+object Mean:
+  def apply(d: Double, ds: Double*): Double = apply(d +: ds)
+  def apply(ds: Seq[Double]): Double = ds.sum/ds.size

@@ -1,0 +1,40 @@
+Импорт типов и их членов
+
+import scala.math.*  - Импортировать все в пакете, используя звездочку ( * ) в качестве подстановочного знака.
+import scala.io.Source  - Импортировать отдельный тип.
+import scala.io.Source.*  - Импортировать все элементы исходного объекта.
+import scala.collection.immutable.{List, Map}  - Выборочно импортировать два типа.
+import scala.collection.immutable.Vector  - Эта и следующая строки фактически одинаковы. Вы можете опустить scala.
+import collection.immutable.Vector
+
+- если вы хотите импортировать метод с именем * в пакете math? Используйте обратные кавычки: import foo.math.`*`
+
+Вы можете размещать операторы импорта практически в любом месте, поэтому вы можете ограничить их видимость только там, где они необходимы, вы можете переименовывать типы при их импорте и можете подавлять видимость нежелательных типов:
+
+def stuffWithCollections() =
+  import scala.collection.immutable.{
+    BitSet as _,
+    LazyList,
+    HashMap as HMap 
+  }
+
+- Псевдоним BitSet на _, что делает его невидимым. Используйте этот метод, когда вы хотите импортировать все, кроме нескольких элементов.
+- Импортируйте LazyList, чтобы на него можно было ссылаться просто как на LazyList без префикса пакета.
+- Импортируйте HashMap, но дайте ему псевдоним, ключевое слово as.
+
+===============================================
+Импорт пакетов и объекты пакетов
+
+Иногда удобно предоставить пользователю один оператор импорта для публичного API, который добавляет все типы, а также константы и методы, не привязанные к типу.
+
+import progscala3.typelessdomore.api.*
+
+определите все, что вам нужно в рамках пакета:
+// src/main/scala/progscala3/typelessdomore/TopLevelDeclarations.scala
+package progscala3.typelessdomore.api
+
+В Scala2 делалось внутри обьекта пакета(Scala 3 поддерживает пока)
+// src/main/scala-2/progscala3/typelessdomore/PackageObjects.scala
+package progscala3.typelessdomore // Notice, no ".api"
+
+package object api { ... }

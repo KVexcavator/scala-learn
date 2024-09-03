@@ -1,0 +1,33 @@
+import scala.concurrent.Future
+
+Future позволяет инкапсулировать некоторую работу, которую нужно сделать, запустить ее выполнение параллельно, а затем продолжить другую работу. Мы обрабатываем результаты Future, когда они выполнены. Один из способов обработки результатов — предоставить обратный вызов, который будет вызван, когда результат будет готов.
+
+=============================================
+import scala.concurrent.ExecutionContext.Implicits.global
+
+Методы Future используют ExecutionContext для запуска кода в отдельных потоках, обеспечивая параллелизм. Это хук, который вы можете использовать для вставки собственной реализации, если это необходимо. Большинство методов Future принимают аргумент ExecutionContext.
+
+В этом случае заданный ExecutionContext.global использует пул потоков с алгоритмом перехвата работы для балансировки нагрузки и оптимизации производительности.
+
+пример:
+
+```
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
+
+def sleep(millis: Long) = Thread.sleep(millis)
+
+(1 to 5).foreach { i =>
+  val future = Future {
+    val duration = (math.random * 1000).toLong
+    sleep(duration)
+    if i == 3 then throw RuntimeException(s"$i -> $duration")
+    duration
+  }
+  future.onComplete {
+    case Success(result) => println(s"Success! #$i -> $result")
+    case Failure(throwable) => println(s"FAILURE! #$i -> $throwable")
+  }
+}
+```

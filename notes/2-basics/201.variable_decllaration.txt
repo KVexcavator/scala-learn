@@ -1,0 +1,7 @@
+Декларироание переменных
+val не мутабельных
+val seq: Seq[String] = Seq("This", "is", "Scala")
+val array: Array[String] = Array("This", "is", "Scala")
+* Однако массивы не являются неизменяемыми
+var мутабельных
+var seq2: Seq[String] = Seq("This", "is", "Scala")

@@ -1,0 +1,23 @@
+Ключевые слова языка
+* soft означает, что их можно использовать как обычные идентификаторы, такие как имена методов и переменных и псевдонимы типов, когда они используются вне узкого контекста. Все soft ключевые слова являются новыми в Scala 3, но не все новые ключевые слова являются мягкими, такие как given и then.
+
+
+abstract Make a declaration abstract.
+as(soft) Provide an alias for an imported and exported names.
+case Start a case clause in a match expression. Define a case class.
+catch Start a clause for catching thrown exceptions.
+class Start a class declaration.
+def   Start a method declaration.
+do    New syntax for while and for loops without braces. Old Scala 2 do…while loop.
+derives(soft)  Used in type class derivation.
+else  Start an else clause for an if expression.
+end(soft)  Optional marker for the end of a block when using the braceless syntax.
+enum  Start an enumeration declaration.
+export  Export members of private fields as part of a type’s interface.
+extends  Indicates that the class or trait that follows is the supertype of the class or trait being declared.
+extension(soft)  Marks one or more extension methods for a type.
+false Boolean false.
+final  Применить к типу, чтобы запретить создание подтипов из него. Применить к члену, чтобы запретить переопределение его в подтипе.
+finally Начните предложение, которое выполняется после соответствующего предложения try, независимо от того, было ли выдано исключение предложением try.
+
+page 51

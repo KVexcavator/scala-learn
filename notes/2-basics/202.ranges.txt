@@ -1,0 +1,14 @@
+Ranges
+Можно создавать диапазоны для нескольких типов: Int, Long, Char, BigInt, которые представляют целые числа произвольного размера, и BigDecimal, который представляет числа с плавающей точкой произвольного размера. Диапазоны Float и Double не поддерживаются, поскольку усечение и округление в арифметике с плавающей точкой делает вычисления диапазонов подверженными ошибкам
+
+Мы можем создавать диапазоны с включающей или исключающей верхней границей, а также можно указать интервал, не равный единице
+1 to 10 // Int range inclusive, interval of 1, (1 to 10)
+1 until 10 // Int range exclusive, interval of 1, (1 to 9)
+1 to 10 by 3 // Int range inclusive, every third. (1,4,7,10)
+10 to 1 by -3 // Int range inclusive, every third, counting down.(10,7,4,1)
+1L to 10L by 3 // Long
+'a' to 'g' by 3 // (a,d,g)
+val range1 = BigInt(1) to BigInt(10)
+range1.foreach(println)
+val range3 = BigDecimal(1.0) to BigDecimal(5.0) by BigDecimal(0.5)
+range3.foreach(println)

@@ -1,0 +1,29 @@
+Option, Some и None: избегание нулей
+
+Null-значения являются огромным источником неприятных ошибок в большинстве языков. Что такое null-сигналы, так это то, что у нас нет значения в данной ситуации. Если значение не равно null, у нас есть значение. Почему бы не выразить эту ситуацию явно с помощью системы типов и не использовать проверку типов, чтобы избежать исключений NullPointerException?
+
+Option позволяет нам явно выразить эту ситуацию без использования null. Option — это абстрактный класс с двумя конкретными подтипами: Some, когда у нас есть значение, и None, когда у нас его нет. Думайте об Option как об особом виде коллекции с нулевым или одним значением.
+
+scala> val stateCapitals = Map(
+| "Alabama" -> "Montgomery",
+| "Alaska" -> "Juneau",
+| // ...
+| "Wyoming" -> "Cheyenne")
+
+scala> stateCapitals.get("Alabama")
+| stateCapitals.get("Wyoming")
+| stateCapitals.get("Unknown")
+val res6: Option[String] = Some(Montgomery)
+val res7: Option[String] = Some(Cheyenne)
+val res8: Option[String] = None
+scala> stateCapitals.getOrElse("Alabama", "Oops1")
+| stateCapitals.getOrElse("Wyoming", "Oops2")
+| stateCapitals.getOrElse("Unknown", "Oops3")
+val res9: String = Montgomery
+val res10: String = Cheyenne
+val res11: String = Oops3
+
+==========================================
+Когда действительно нельзя избежать нулей
+
+Поскольку Scala работает на JVM, JavaScript и собственных средах, она должна взаимодействовать с другими библиотеками, а это значит, что Scala должна поддерживать null, поскольку многие из этих библиотек имеют методы, которые могут возвращать null.

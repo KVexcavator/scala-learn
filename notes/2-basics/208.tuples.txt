@@ -1,0 +1,29 @@
+Кортежи
+
+Scala реализует кортежи значений, где сохраняются отдельные типы.
+
+scala> val tup = ("Hello", 1, 2.3)
+val tup: (String, Int, Double) = (Hello,1,2.3)
+
+scala> val tup2: (String, Int, Double) = ("World", 4, 5.6)
+val tup2: (String, Int, Double) = (World,4,5.6)
+
+Извлечь первый элемент можно с помощью метода _1 и аналогично для остальных. Индексация кортежей с помощью этих методов начинается с единицы, по исторической традиции, а не с нуля. Однако Scala 3 добавляет возможность доступа к элементам начинающейся с нуля, tup(0) и т. д.
+
+scala> (tup._1, tup(0))
+val res7: (String, String) = (Hello,Hello)
+scala> (tup._2, tup(1))
+val res8: (Int, Int) = (1,1)
+scala> (tup._3, tup(2))
+val res9: (Double, Double) = (2.3,2.3)
+
+мы можем извлечь все три элемента по отдельности с помощью сопоставления с образцом:
+
+scala> val (s, i, d) = tup
+val s: String = Hello
+val i: Int = 1
+val d: Double = 2.3
+
+Двухэлементные кортежи, иногда называемые парами
+scala> 1 -> "one"
+val res3: (Int, String) = (1,one)
