@@ -1,0 +1,27 @@
+import scala.annotation.tailrec
+
+// в определении функции передаются два сета именнованных параметров
+@tailrec
+def continue(conditional: => Boolean)(body: => Unit): Unit =
+if conditional then
+  body
+  continue(conditional)(body)
+
+// исполюзуем 
+var count = 0
+continue (count < 5) {
+  println(s"at $count")
+  count += 1
+}
+assert(count == 5)
+
+// можно переопределить
+def continue(conditional: => Boolean)(body: => Unit): Unit = ...
+def continue(nonNegative: => Int)(body: => Unit): Unit = ...
+
+// пример с типом
+def apply[
+  R <: { def close():Unit }, T ]
+  (resource: => R)
+  (f: R => T) = ...
+* <: означает, что R является подтипом чего-то другого. В этом случае любой тип, используемый для R, должен содержать метод close():Unit.

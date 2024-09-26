@@ -1,0 +1,32 @@
+Loop
+for i <- 0 until 10 do println(i)
+-----------------------------------
+Generators
+scala> for i <- Set(0,2,1,2,3,4,4,5) do print(s"$i|")
+0|5|1|2|3|4|
+-----------------------------------
+Guards фильтры
+for
+  n <- 0 to 6
+  if n%2 == 0
+do println(n)
+-------------------------------------
+Yielding New Values 
+
+val evens = for
+  n <- 0 to 10
+  if n%2 == 0
+yield n
+assert(evens == Vector(0, 2, 4, 6, 8, 10))
+
+val odds = for
+  number <- Vector(1,2,3,4,5)
+  if number % 2 == 1
+yield number.toString
+assert(odds == Vector("1", "3", "5"))
+---------------------------------------
+забрать только Some
+val goodDays2 = for
+  case Some(day) <- dayOptions
+  fn = day.fullName
+yield fn

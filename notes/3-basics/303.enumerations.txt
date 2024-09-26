@@ -1,0 +1,51 @@
+1) Допустимые значения объявляются с помощью case.
+enum WeekDaySimple:
+  case Sun, Mon, Tue, Wed, Thu, Fri, Sat
+
+2) Альтернативное объявление с полем fullName. Объявите поля с помощью val, если вы хотите, чтобы они были доступны (например, WeekDay.Sun.fullName).
+3) Значения объявляются с помощью ключевого слова case, и fullName устанавливается.
+enum WeekDay(val fullName: String):
+  case Sun extends WeekDay("Sunday")
+  case Mon extends WeekDay("Monday")
+  case Tue extends WeekDay("Tuesday")
+  case Wed extends WeekDay("Wednesday")
+  case Thu extends WeekDay("Thursday")
+  case Fri extends WeekDay("Friday")
+  case Sat extends WeekDay("Saturday")
+
+  4) Вы можете определить методы.
+  def isWorkingDay: Boolean = ! (this == Sat || this == Sun)
+
+5) Порядок WeekDay.values ​​не соответствует порядку объявления, поэтому мы сортируем по порядковому номеру, уникальному для каждого случая в порядке объявления, начиная с 0.
+val sorted = WeekDay.values.sortBy(_.ordinal).toSeq
+assert(sorted == List(Sun, Mon, Tue, Wed, Thu, Fri, Sat))
+
+6)Поскольку Sun был объявлен первым, его порядковое значение равно 0.
+assert(Sun.fullName == "Sunday")
+assert(Sun.ordinal == 0)
+
+7) Вы можете искать значение перечисления по его имени.
+assert(Sun.isWorkingDay == false)
+assert(WeekDay.valueOf("Sun") == WeekDay.Sun)
+
+--------------------------------------------
+ADT - algebraic data types
+============================================
+Scala 3 создать дерево ADT с enum
+
+object EnumADT:
+  enum Tree[T]:
+    case Branch(left: Tree[T], right: Tree[T])
+    case Leaf(elem: T)
+
+import Tree.*
+
+val tree = Branch(
+  Branch(
+    Leaf(1),
+    Leaf(2)),
+  Branch(
+    Leaf(3),
+  Branch(Leaf(4),Leaf(5))))
+
+EnumADT.tree

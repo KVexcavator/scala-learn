@@ -46,3 +46,5 @@ $ sbt
 scala> import progscala3.introscala.shapes.*
 scala> val p00 = Point()
 ================================================
+технолоогии из вакансий
+cats, cat-effects, zio, Play, akka, http4s/sttp, monix

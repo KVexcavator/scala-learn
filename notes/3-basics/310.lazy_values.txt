@@ -1,0 +1,23 @@
+lazy val
+Когда нужно вычислить выражение один раз, чтобы инициализировать поле в экземпляре, но при этом отложить этот вызов до тех пор, пока значение действительно не понадобится. Другими словами, вычисление по требованию.
+
+case class DBConnection():
+  println("In constructor")
+  type MySQLConnection = String
+  lazy val connection: MySQLConnection =
+    // Connect to the database
+    println("Connected!")
+    "DB"
+
+scala> val dbc = DBConnection()
+In constructor
+val dbc: DBConnection = DBConnection()
+
+scala> dbc.connection
+Connected!
+val res4: dbc.MySQLConnection = DB
+
+scala> dbc.connection
+val res5: dbc.MySQLConnection = DB
+
+*Существует аннотация @threadUnsafe, которую можно добавить к lazy val (в пакете scala.annotation). Она заставляет инициализацию использовать более быстрый механизм, который не является потокобезопасным.

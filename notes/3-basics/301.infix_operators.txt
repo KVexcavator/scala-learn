@@ -1,0 +1,20 @@
+Определение операторов
+
+выражение 1 + 2 , можно записать 1.+(2), где + метод
+для создания своих методов как +, исползуется нотация infix 
+
+case class Foo(str: String):
+  def append(s: String): Foo = copy(str + s)
+  infix def combine(s:String): Foo = append(s)
+теперь можно вызвать
+Foo("one").append("two")
+Foo("one") combine "two" (как 1 + 3)
+----------------------------------------------
+Анотация @targetName
+для отключения методов от компилятора
+
+@targetName("concat") def ...
+one concat "two"
+  1 |one concat "two"
+  |^^^^^^^^^^
+  |value concat is not a member of progscala3.rounding.Path

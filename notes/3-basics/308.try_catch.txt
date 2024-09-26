@@ -1,0 +1,29 @@
+В отличие от Java, в Scala нет проверяемых исключений. Проверяемые исключения Java рассматриваются Scala как непроверяемые. Также нет предложения throws в объявлениях методов. Однако есть аннотация @throws, которая полезна для взаимодействия с Java. Вы генерируете исключение, написав throw MyException(…). Для перехвата исключений Scala использует сопоставление с образцом, чтобы указать исключения, которые нужно перехватить.
+
+Пример
+scala.io.Source для чтения входных данных и scala.util.control.NonFatal для сопоставления нефатальных исключений (т. е. тех, где разумно попытаться выполнить восстановление)
+
+package any/any
+import scala.io.Source
+import scala.util.control.NonFatal
+
+/** Usage: scala rounding.TryCatch filename1 filename2 ... */
+@main def TryCatch(fileNames: String*) =
+  fileNames.foreach { fileName =>
+    var source: Option[Source] = None
+    try
+      source = Some(Source.fromFile(fileName))
+      val size = source.get.getLines.size
+      println(s"file $fileName has $size lines")
+    catch
+      case NonFatal(ex) => println(s"Non fatal exception! $ex")
+    finally
+      for s <- source do
+      println(s"Closing $fileName...")
+      s.close
+  }
+
+  > runMain any.any.TryCatch README.md foo/bar
+file README.md has 148 lines
+Closing README.md...
+Non fatal exception! java.io.FileNotFoundException: foo/bar (...)

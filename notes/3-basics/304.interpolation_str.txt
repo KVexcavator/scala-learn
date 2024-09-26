@@ -1,0 +1,30 @@
+Итерполирование строк
+---------------------------------------------
+обычная форма
+val name = "Buck Trends"
+println(s"Hello, $name")
+
+форматированая форма
+Scala ипользует класс Formatter из Java
+val gross = 100000F
+val net = 64000F
+val percent = (net / gross) * 100
+println(f"$$${gross}%.2f vs. $$${net}%.2f or ${percent}%.1f%%")
+
+выведет $100000.00 vs. $64000.00 or 64.0%
+Два знака доллара, $$, используются для печати буквального знака доллара США, а два знака процента, %%, используются для печати буквального знака процента. Выражение ${gross}%.2f форматирует значение gross как число с плавающей точкой с двумя цифрами после десятичной точки.
+
+В этом примере мы запросили двузначное целое число, дополненное ведущими нулями.
+scala> val s = "%02d: name = %s".format(5, "Dean Wampler")
+val s: String = "05: name = Dean Wampler"
+
+много линий
+val multiLine = s"123\n$name\n456"
+123
+Dean Wampler
+456
+
+много линий со знаками
+scala> val multiLineRaw = raw"123\n$name\n456"
+val multiLineRaw: String = 123\nDean Wampler\n456
+
