@@ -8,5 +8,7 @@ object  ShoppingCarts:
 // val justApple = List("Apple")
 // ShoppingCarts.getDiscountPercentage(justApple)
 
-// val BookAndApple = List("Book", "Apple")
+//val BookAndApple = List("Book", "Apple")
 // ShoppingCarts.getDiscountPercentage(BookAndApple)
+
+//assert(ShoppingCarts.getDiscountPercentage(BookAndApple) == 1)
